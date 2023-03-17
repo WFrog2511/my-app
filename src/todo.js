@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Todo extends Component{
+export default class Todo extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +22,13 @@ class Todo extends Component{
     });
   }
 
+  removeTodo = (index) => {
+    const { todos, name } = this.state;
+    this.setState({
+      todos: [...todos.slice(0, index), ...todos.slice(index + 1)]
+    });
+  }
+
   render() {
     const { todos } = this.state;
 
@@ -29,7 +36,11 @@ class Todo extends Component{
       <input type="text" onInput={this.onInput} />
       <button onClick={this.addTodo} >登録</button>
       <ul>
-        {todos.map((todo, index) => <li key={index}>{todo}</li>)}
+        {todos.map((todo, index) => <li key={index}>
+          {todo}
+          <button onClick={() => {this.removeTodo(index)}}>削除</button>
+        </li>)}
+
       </ul>
     </div>);
   }
